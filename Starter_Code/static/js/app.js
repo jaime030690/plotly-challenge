@@ -1,5 +1,6 @@
 // look at json data
 d3.json("./samples.json").then(function(data) {
+    
     // look at data
     console.log(data);
 
@@ -10,15 +11,13 @@ d3.json("./samples.json").then(function(data) {
         .enter()
         .append("option")
         .text(d => d);
-
+    
+    
     
 
 });
 
-
-
-// call updateBarChart when dropdown menu item is chosen
-d3.selectAll(".selDataSet").on("change", updateBarChart);
-
 // function updates bar chart when a menu item is chosen
-function updateBarChart() {}
+function optionChanged(val) {
+    console.log(val);
+}
