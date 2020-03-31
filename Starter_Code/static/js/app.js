@@ -1,3 +1,4 @@
+// function runs when page loads and makes a default selection
 function init(){
     // look at json data
     d3.json("./samples.json").then(function(data) {
@@ -25,7 +26,6 @@ function optionChanged(val) {
 }
 
 // function to update the bar chart
-
 function updateCharts(val) {
 
     d3.json("./samples.json").then(function(data) {
