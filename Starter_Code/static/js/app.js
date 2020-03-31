@@ -2,17 +2,16 @@ function init(){
     // look at json data
     d3.json("./samples.json").then(function(data) {
     
-    // look at data
-    console.log(data);
+        // look at data
+        console.log(data);
 
-    // create drop down menu with names in data set
-    var dropdownMenu = d3.select("#selDataset")
-        .selectAll("option")
-        .data(data.names)
-        .enter()
-        .append("option")
-        .text(d => d);
-    
+        // create drop down menu with names in data set
+        d3.select("#selDataset")
+            .selectAll("option")
+            .data(data.names)
+            .enter()
+            .append("option")
+            .text(d => d);
     });
 
     // default selection
@@ -31,13 +30,14 @@ function updateCharts(val) {
 
     d3.json("./samples.json").then(function(data) {
         
+        // get data from samples
         var otus = data.samples;
-
+        
         var otu_data = [];
         
         // loop through data to find matching name value, push to array
         for (var i = 0; i < otus.length; i++) {
-            if (otus[i].id === val) {
+            if (otus[i].id == val) {
                 for (var j = 0; j < otus[i].otu_ids.length; j++) {
                     otu_data.push({
                         otu_id: otus[i].otu_ids[j],
@@ -45,8 +45,21 @@ function updateCharts(val) {
                         otu_label: otus[i].otu_labels[j]
                     });
                 };
-            }
+            };
         };
+        
+        // get metadata
+        var metadata = data.metadata;
+
+        var sample_metadata = {};
+
+        // loop to get metadata for subject
+        for (var i = 0; i < metadata.length; i++) {
+            if (metadata[i].id == val) {
+                sample_metadata = metadata[i];
+            };
+        };
+
 
         /*
         Creating bar chart, data will need to be sorted with greater OTU sample value,
@@ -76,16 +89,19 @@ function updateCharts(val) {
             orientation: "h"
         };
         
+        // create layout
         var layout = {
             title: "Top 10 OTUs",
         };
 
+        // add data
         var data = [trace1];
 
+        // build plot
         Plotly.newPlot("bar", data, layout);
 
         /*
-        Creating bubble chart
+        Create bubble chart
         */
 
         // variables for the trace
@@ -106,18 +122,27 @@ function updateCharts(val) {
             },
             hovertext: text_values
         };
-
+        
+        // create layout
         var layout = {
             xaxis: {
                 title: "OTU ID"
             }
         };
-
+        
+        // add data
         var data = [trace1];
 
+        // build plot
         Plotly.newPlot("bubble", data, layout);
 
+        /*
+        Update Demographic info.
+        */
 
+        d3.select("#sample-metadata")
+            .html(`id: ${sample_metadata.id}</br>ethnicity: ${sample_metadata.ethnicity}</br>gender: ${sample_metadata.gender}</br>age: ${sample_metadata.age}</br>location: ${sample_metadata.location}</br>bbtype: ${sample_metadata.bbtype}</br>wfreq: ${sample_metadata.wfreq}`);
+        
     });
 }
 
