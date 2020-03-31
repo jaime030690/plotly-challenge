@@ -143,6 +143,46 @@ function updateCharts(val) {
         d3.select("#sample-metadata")
             .html(`id: ${sample_metadata.id}</br>ethnicity: ${sample_metadata.ethnicity}</br>gender: ${sample_metadata.gender}</br>age: ${sample_metadata.age}</br>location: ${sample_metadata.location}</br>bbtype: ${sample_metadata.bbtype}</br>wfreq: ${sample_metadata.wfreq}`);
         
+        /*
+        Gauge chart
+        */
+
+        // create trace
+        var trace1 = {
+            domain: {
+                x: [0, 1],
+                y: [0, 1]
+            },
+            value: sample_metadata.wfreq,
+            title: "Belly Button Washing Frequency",
+            type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                axis: {
+                    range: [null, 9]
+                },
+                bar: {
+                    color: "#C0392B"
+                },
+                steps: [
+                    { range: [0, 1], color: "#EAF2F8"},
+                    { range: [1, 2], color: "#D4E6F1"},
+                    { range: [2, 3], color: "#A9CCE3"},
+                    { range: [3, 4], color: "#7FB3D5"},
+                    { range: [4, 5], color: "#5499C7"},
+                    { range: [5, 6], color: "#2980B9"},
+                    { range: [6, 7], color: "#2471A3"},
+                    { range: [7, 8], color: "#1F618D"},
+                    { range: [8, 9], color: "#1A5276"}
+                ]
+            }
+        }
+        
+        // add data
+        var data = [trace1];
+        
+        // build plot
+        Plotly.newPlot("gauge", data);
     });
 }
 
