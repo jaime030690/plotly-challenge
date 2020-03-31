@@ -1,5 +1,6 @@
 // function runs when page loads and makes a default selection
 function init(){
+
     // look at json data
     d3.json("./samples.json").then(function(data) {
     
@@ -21,13 +22,18 @@ function init(){
 
 // function updates charts when a menu item is chosen
 function optionChanged(val) {
+
+    // print out selection
     console.log(val);
+
+    // call function, pass value
     updateCharts(val);
 }
 
 // function to update the bar chart
 function updateCharts(val) {
 
+    // read in json data
     d3.json("./samples.json").then(function(data) {
         
         // get data from samples
@@ -59,7 +65,6 @@ function updateCharts(val) {
                 sample_metadata = metadata[i];
             };
         };
-
 
         /*
         Creating bar chart, data will need to be sorted with greater OTU sample value,
@@ -144,7 +149,7 @@ function updateCharts(val) {
             .html(`id: ${sample_metadata.id}</br>ethnicity: ${sample_metadata.ethnicity}</br>gender: ${sample_metadata.gender}</br>age: ${sample_metadata.age}</br>location: ${sample_metadata.location}</br>bbtype: ${sample_metadata.bbtype}</br>wfreq: ${sample_metadata.wfreq}`);
         
         /*
-        Gauge chart
+        BONUS: Gauge chart
         */
 
         // create trace
